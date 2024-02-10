@@ -23,14 +23,24 @@ using std::endl;
 int main () {
     Stack * stk = new Stack( );
 
-    // push 1, 2, 3, 4, 5
+    /* push 1, 2, 3, 4, 5
     for (int i = 1; i <= 5; i++) {
         stk->push(i);
         cout << "push " << i << endl;
     }
+*/
+    stk->push(1);
+    stk->push(2);
+    stk->push(3);
+    stk->traverse(); 
+
+    stk->pop();
+    stk->pop();
+    stk->pop(); 
+    stk->traverse(); 
 
 
-    // pop top two
+    /*pop top two
     int x = stk->peek();
     stk->pop();
     int y = stk->peek();
@@ -54,7 +64,7 @@ int main () {
 
     delete stk;
     stk = nullptr;
-    
+    */ 
     return 0;
 }
 
