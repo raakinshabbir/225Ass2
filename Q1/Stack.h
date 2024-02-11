@@ -44,8 +44,8 @@ public:
         return true;  
     }
 
-    int pop() {
-    int element; // Default value if stack is empty
+    bool pop() {
+    int element;
     if (head != nullptr) {
         // If there's only one node in the list
         if (head == tail) {
@@ -67,10 +67,23 @@ public:
             tail->next = nullptr;
             delete temp;
         }
+    } 
+    else{
+        return false; 
     }
-    return element; 
+    return true; 
 }
 
+    int peek() {
+        if(head == nullptr){
+            return -1;
+        }
+        else{
+        int element = tail -> data; 
+        return element;
+        } 
+    }
+//TRAVERSE ISNT REAL
     void traverse() {
         StackNode *current = head;
         while (current != nullptr) {

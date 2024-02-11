@@ -23,48 +23,40 @@ using std::endl;
 int main () {
     Stack * stk = new Stack( );
 
-    /* push 1, 2, 3, 4, 5
-    for (int i = 1; i <= 5; i++) {
-        stk->push(i);
-        cout << "push " << i << endl;
-    }
-*/
     stk->push(1);
     stk->push(2);
     stk->push(3);
     stk->traverse(); 
 
-    stk->pop();
-    stk->pop();
-    stk->pop(); 
-    stk->traverse(); 
-
-
-    /*pop top two
+    //pop top two
+    cout << "pop top 2 elements on the stack:" << endl; 
     int x = stk->peek();
     stk->pop();
     int y = stk->peek();
     stk->pop();
-    cout << "top 1: " << x << ", top 2: " << y << endl;
+    cout << "first popped " << x << ", and next popped: " << y << endl;
 
+    cout << "this is the new stack: " << endl; 
+    stk->traverse(); 
 
     // push 6, 7, 8, 9, 10
+    cout << "push more elements onto the stack: " << endl; 
     for (int i = 6; i <= 10; i++) {
         stk->push(i);
-        cout << "push " << i << endl;
     }
 
+    stk->traverse(); 
 
-    // pop all
+    cout << "pop all elements from the stack: " << endl; 
     while (!stk->isEmpty()) {
         int x = stk->peek();
         stk->pop();
-        cout << "pop " << x << endl;
+        stk->traverse(); 
     }
+
 
     delete stk;
     stk = nullptr;
-    */ 
     return 0;
 }
 
