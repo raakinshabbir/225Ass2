@@ -1,3 +1,8 @@
+//LOL WE FUCKED IT NO TAIL POINTER JUST HEAD POINTER LOLLLLLLLLLLLL
+//way we have it rn is a DHDL
+//need SHSL
+
+
 class Stack {
 private:
     // Nodes for a singly-linked list

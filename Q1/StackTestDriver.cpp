@@ -54,7 +54,6 @@ int main () {
         stk->traverse(); 
     }
 
-
     delete stk;
     stk = nullptr;
     return 0;
