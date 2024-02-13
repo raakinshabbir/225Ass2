@@ -58,4 +58,3 @@ int main () {
     stk = nullptr;
     return 0;
 }
-
