@@ -69,21 +69,6 @@ int main () {
           - Pop the top two numbers from the numStack.
           - Apply the operator to the numbers and push the result back onto the numStack.
 5. The final result will be the only element left on the numStack.
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     */
 }
 
