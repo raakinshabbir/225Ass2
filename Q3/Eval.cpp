@@ -8,40 +8,58 @@
  */
 
 #include <iostream>
+
 #include "Scanner.h"
+
 #include "Stack.h"  // GENERIC STACK
 
 using std::cout;
 using std::endl;
 using std::cin;
 
+int main() {
+  Scanner S(cin);
+  Token t;
 
-int main () {
-    Scanner S(cin);
-    Token t;
+  Stack < Token > numstack, opstack; // 2x Stacks of type Token
 
-    Stack<Token> numstack, opstack;  // 2x Stacks of type Token
-    
+  t = S.getnext();
 
-    t = S.getnext();
+  while (t.tt != eof) {
+    if (t.tt == integer) {
+      numstack.push(t.val);
+    } 
+    else if (t.tt == lptok) {
+      opstack.push(t.val);
+    } 
+    else if (t.tt == rptok) {
+      while (opstack.peek() != lptok) {
+        char operator = opstack.pop();
+        int a = numstack.pop();
+        int b = numstack.pop();
 
-    
-    while (t.tt != eof) {
-        if (t.tt == integer){
-            numstack.push(t.val);
+        if (operator == '+') {
+          int sum = a + b;
+          numstack.push(sum);
+        } 
+        else if (operator == '-') {
+          int difference = a - b;
+          numstack.push(difference);
+        } 
+        else if (operator == '*') {
+          int product = a * b;
+          numstack.push(product);
+        } 
+        else if (operator == '/') {
+          int quotient = a / b;
+          numstack.push(quotient);
         }
-            else if (t.tt == lptok){
-                opstack.push(t.val);
-            }
-            else if(t.tt == rptok){
-                while(opstack.peek() != lptok){
-                    opstack.pop();
-                    numstack.pop();
-                    numstack.pop(); 
-                }
-            }
-        }
+      }
     }
+    opstack.pop();
+    if(t.tt == pltok )
+  }
+}
 
 
     /*
@@ -57,10 +75,10 @@ int main () {
        3.3.1 While the top of the opStack is not '(':
               - Pop the top operator from the opStack.
               - Pop the top two numbers from the numStack.
-
-              
               - Apply the operator to the numbers and push the result back onto the numStack.
        3.3.2 Pop the '(' from the opStack.
+
+
    3.4 If the token is an operator (+, -, *, /):
        3.4.1 While the opStack is not empty and the precedence of the current token is less than or equal to the precedence of the top operator on the opStack:
               - Pop the top operator from the opStack.
