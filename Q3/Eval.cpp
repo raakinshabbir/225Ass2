@@ -33,6 +33,13 @@ int main () {
             else if (t.tt == lptok){
                 opstack.push(t.val);
             }
+            else if(t.tt == rptok){
+                while(opstack.peek() != lptok){
+                    opstack.pop();
+                    numstack.pop();
+                    numstack.pop(); 
+                }
+            }
         }
     }
 
@@ -46,15 +53,12 @@ int main () {
        3.1.1 Push it onto the numStack.
    3.2 If the token is a left parenthesis '(':
        3.2.1 Push it onto the opStack.
-
-
-
-
-       
-   3.3 If the token is a right parenthesis ')':
+3.3 If the token is a right parenthesis ')':
        3.3.1 While the top of the opStack is not '(':
               - Pop the top operator from the opStack.
               - Pop the top two numbers from the numStack.
+
+              
               - Apply the operator to the numbers and push the result back onto the numStack.
        3.3.2 Pop the '(' from the opStack.
    3.4 If the token is an operator (+, -, *, /):
@@ -69,6 +73,21 @@ int main () {
           - Pop the top two numbers from the numStack.
           - Apply the operator to the numbers and push the result back onto the numStack.
 5. The final result will be the only element left on the numStack.
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     */
 }
 
