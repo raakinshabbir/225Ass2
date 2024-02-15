@@ -1,111 +1,101 @@
-/* 
- * Eval.cpp
- *
- * Description: Evaluation of infix expressions using two Stacks.
- *
- * Author:
- * Date:
- */
-
 #include <iostream>
-
 #include "Scanner.h"
-
-#include "Stack.h"  // GENERIC STACK
+#include "Stack.h"
 
 using std::cout;
 using std::endl;
 using std::cin;
 
+/* Pseudocode:
+     * while T is not EOF or the operator stack is non empty
+     *   if T is a number:
+     *       push T to the number stack
+     *       get the next token
+     *   else if T is a left parenthesis:
+     *       push T to the operator stack
+     *       get the next token
+     *   else if T is a right parenthesis:
+     *       if the top of the operator stack is a left parenthesis:
+     *           pop it from the operator stack
+     *       else:
+     *           pop the top two numbers and the top operator
+     *           perform the operation
+     *           push the result to the number stack
+     *       get the next token
+     * 
+     *   else if T is +, - or EOF:
+     *       if the operator stack is nonempty and the top is one of +, -, *, /:
+     *           pop the top two numbers and the top operator
+     *           perform the operation
+     *           push the result to the number stack
+     *       else:
+     *           push T to the operator stack
+     *       get the next token
+     *   else if T is * or /:
+     *       if the operator stack is nonempty and the top is one of *, /:
+     *           pop the top two numbers and the top operator
+     *           perform the operation
+     *           push the result to the number stack
+     *       else:
+     *           push T to the operator stack
+     *       get the next token
+     */
+
 int main() {
-  Scanner S(cin);
-  Token t;
+    Scanner S(cin);
+    Token t;
 
-  Stack < Token > numstack, opstack; // 2x Stacks of type Token
+    Stack<Token> numstack, opstack; // 2x Stacks of type Token
 
-  t = S.getnext();
+    t = S.getnext();
 
-  while (t.tt != eof) {
-    if (t.tt == integer) {
-      numstack.push(t.val);
-    } 
-    else if (t.tt == lptok) {
-      opstack.push(t.val);
-    } 
-    else if (t.tt == rptok) {
-      while (opstack.peek() != lptok) {
-        char operator = opstack.pop();
-        int a = numstack.pop();
-        int b = numstack.pop();
-
-        if (operator == '+') {
-          int sum = a + b;
-          numstack.push(sum);
+    while (t.tt != eof || !opstack.isEmpty()) {
+        if (t.tt == integer) {
+            numstack.push(t); // Push the token onto the numstack
+            t = S.getnext(); // Get the next token
         } 
-        else if (operator == '-') {
-          int difference = a - b;
-          numstack.push(difference);
-        } 
-        else if (operator == '*') {
-          int product = a * b;
-          numstack.push(product);
-        } 
-        else if (operator == '/') {
-          int quotient = a / b;
-          numstack.push(quotient);
+        else if(t.tt == lptok){
+            opstack.push(t); 
+            t = S.getnext(); 
         }
-      }
+        else if (t.tt == rptok){
+            if(opstack.peek().tt == lptok){
+                opstack.pop();
+            }
+            else{
+                int num1 = numstack.pop().val; 
+                int num2 = numstack.pop().val; 
+                Token op = opstack.pop();
+
+                int result; 
+                if(op.tt == pltok){
+                    result = num1 + num2; 
+                }
+                else if(op.tt == mitok){
+                    result = num1 - num2; 
+                }
+                else if(op.tt == asttok){
+                    result = num1 * num2; 
+                }
+                else if(op.tt == slashtok){
+                    result = num1 / num2;
+                }
+                Token resultToken;
+                resultToken.tt = integer;
+                resultToken.val = result;
+                numstack.push(resultToken); 
+            }
+            t = S.getnext(); 
+        }
+        else if(t.tt == pltok || t.tt == mitok || t.tt == eof){
+             while (!opstack.isEmpty() && (opstack.peek().tt == pltok || opstack.peek().tt == mitok || opstack.peek().tt == asttok || opstack.peek().tt == slashtok)){
+                
+             }
+        }
+
+
+
+
+
     }
-    opstack.pop();
-    if(t.tt == pltok )
-  }
 }
-
-
-    /*
-    
-    1. Initialize two stacks: one for numbers (numStack) and one for operators (opStack).
-2. Scan the input expression from left to right.
-3. For each token in the expression:
-   3.1 If the token is a number:
-       3.1.1 Push it onto the numStack.
-   3.2 If the token is a left parenthesis '(':
-       3.2.1 Push it onto the opStack.
-3.3 If the token is a right parenthesis ')':
-       3.3.1 While the top of the opStack is not '(':
-              - Pop the top operator from the opStack.
-              - Pop the top two numbers from the numStack.
-              - Apply the operator to the numbers and push the result back onto the numStack.
-       3.3.2 Pop the '(' from the opStack.
-
-
-   3.4 If the token is an operator (+, -, *, /):
-       3.4.1 While the opStack is not empty and the precedence of the current token is less than or equal to the precedence of the top operator on the opStack:
-              - Pop the top operator from the opStack.
-              - Pop the top two numbers from the numStack.
-              - Apply the operator to the numbers and push the result back onto the numStack.
-       3.4.2 Push the current token onto the opStack.
-4. After scanning all tokens, there may be remaining operators on the opStack:
-   4.1 While the opStack is not empty:
-          - Pop the top operator from the opStack.
-          - Pop the top two numbers from the numStack.
-          - Apply the operator to the numbers and push the result back onto the numStack.
-5. The final result will be the only element left on the numStack.
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    */
-}
-
