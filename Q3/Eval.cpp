@@ -22,8 +22,7 @@ using std::cin;
      *           perform the operation
      *           push the result to the number stack
      *       get the next token
-     * 
-     *   else if T is +, - or EOF:
+     *          else if T is +, - or EOF:
      *       if the operator stack is nonempty and the top is one of +, -, *, /:
      *           pop the top two numbers and the top operator
      *           perform the operation
@@ -31,6 +30,8 @@ using std::cin;
      *       else:
      *           push T to the operator stack
      *       get the next token
+     * 
+     * 
      *   else if T is * or /:
      *       if the operator stack is nonempty and the top is one of *, /:
      *           pop the top two numbers and the top operator
@@ -88,14 +89,62 @@ int main() {
             t = S.getnext(); 
         }
         else if(t.tt == pltok || t.tt == mitok || t.tt == eof){
-             while (!opstack.isEmpty() && (opstack.peek().tt == pltok || opstack.peek().tt == mitok || opstack.peek().tt == asttok || opstack.peek().tt == slashtok)){
-                
-             }
+              if (!opstack.isEmpty() && (opstack.peek().tt == pltok || opstack.peek().tt == mitok || opstack.peek().tt == asttok || opstack.peek().tt == slashtok)){
+                int num1 = numstack.pop().val; 
+                int num2 = numstack.pop().val;
+                Token op = opstack.pop(); 
+
+                int result; 
+                if(op.tt == pltok){
+                    result = num1 + num2; 
+                }
+                else if(op.tt == mitok){
+                    result = num1 - num2; 
+                }
+                else if(op.tt == asttok){
+                    result = num1 * num2; 
+                }
+                else if(op.tt == slashtok){
+                    result = num1 / num2;
+                }
+                Token resultToken;
+                resultToken.tt = integer;
+                resultToken.val = result;
+                numstack.push(resultToken); 
+              }
+              else{
+                opstack.push(t);
+              }
+              t = S.getnext(); 
         }
+        else if(t.tt == asttok || t.tt == slashtok){
+            if(!opstack.isEmpty() && (opstack.peek().tt == asttok || opstack.peek().tt == slashtok)){
+                int num1 = numstack.pop().val;
+                int num2 = numstack.pop().val; 
+                Token op = opstack.pop();
 
-
-
-
-
+                int result; 
+                if(op.tt == pltok){
+                    result = num1 + num2; 
+                }
+                else if(op.tt == mitok){
+                    result = num1 - num2; 
+                }
+                else if(op.tt == asttok){
+                    result = num1 * num2; 
+                }
+                else if(op.tt == slashtok){
+                    result = num1 / num2;
+                }
+                Token resultToken;
+                resultToken.tt = integer;
+                resultToken.val = result;
+                numstack.push(resultToken); 
+            }
+            else{
+                opstack.push(t);
+            }
+            t = S.getnext(); 
+        }
+        }
     }
-}
